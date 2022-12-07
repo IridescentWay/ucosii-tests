@@ -1,4 +1,5 @@
-﻿#include "face_pthread.h"
+﻿#include "asserts.h"
+#include "face_pthread.h"
 
 void task1_func()
 {
@@ -10,13 +11,9 @@ void task1_func()
 	
 }
 
-void pthread_test_normaloperation()
+void pthread_create_normaloperation()
 {
 	pthread_t* thread = (pthread_t*) malloc(sizeof(pthread_t));
-	pthread_create(thread, (const pthread_attr_t*) NULL, task1_func, NULL);
-	int res = pthread_detach(thread);
-	if (res != 0) {
-		printf("__FILE__:%s\n", __FILE__);
-		printf("__LINE__:%d\n", __LINE__ - 3);
-	}
+	int res = pthread_create(thread, (const pthread_attr_t*) NULL, task1_func, NULL);
+	ASSERT_LONG_EQUAL(0, res);
 }
